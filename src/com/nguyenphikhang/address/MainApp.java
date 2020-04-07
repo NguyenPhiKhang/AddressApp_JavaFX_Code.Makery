@@ -5,9 +5,11 @@ import com.nguyenphikhang.address.view.PersonEditDialogController;
 import com.nguyenphikhang.address.view.PersonOverviewController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -37,16 +39,37 @@ public class MainApp extends Application {
         personData.add(new Person("Anna", "Best"));
         personData.add(new Person("Stefan", "Meier"));
         personData.add(new Person("Martin", "Mueller"));
+
+//        personData.addListener((ListChangeListener<Person>) change -> {
+//            System.out.println("Phần tử thay đổi : " + change );
+//
+//            System.out.println("hiển thị lại list : " + personData);
+//        });
     }
 
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("AddressApp");
+        this.primaryStage.getIcons().add(new Image("file:resources/images/address_book_32.png"));
 
         initRootLayout();
 
         showPersonOverview();
+    }
+
+    private void initRootLayout() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("view/RootLayout.fxml"));
+            rootLayout = loader.load();
+
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -69,21 +92,6 @@ public class MainApp extends Application {
 
     public Stage getPrimaryStage() {
         return primaryStage;
-    }
-
-
-    private void initRootLayout() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("view/RootLayout.fxml"));
-            rootLayout = loader.load();
-
-            Scene scene = new Scene(rootLayout);
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public ObservableList<Person> getPersonData() {

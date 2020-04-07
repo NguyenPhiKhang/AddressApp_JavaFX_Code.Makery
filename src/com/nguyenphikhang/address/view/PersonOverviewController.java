@@ -53,7 +53,6 @@ public class PersonOverviewController {
         if (index >= 0)
             personTable.getItems().remove(index);
         else {
-            // Nothing selected.
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(mainApp.getPrimaryStage());
             alert.setTitle("No Selection");
